@@ -8,6 +8,10 @@ export const GENERATED_MATCHER_PATH = resolve(
   PROJECT_ROOT,
   "src/infrastructure/generated/matcher.js",
 );
+export const GENERATED_WORD_LIST_PATH = resolve(
+  PROJECT_ROOT,
+  "src/infrastructure/generated/word-list.js",
+);
 
 export async function loadStaticJsonDictionary(
   path = STATIC_JSON_SOURCE_PATH,

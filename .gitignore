@@ -3,8 +3,7 @@ dist/
 coverage/
 .nyc_output/
 src/infrastructure/generated/matcher.js
-
-benchmark/latest.md
+src/infrastructure/generated/word-list.js
 
 .DS_Store
 *.log

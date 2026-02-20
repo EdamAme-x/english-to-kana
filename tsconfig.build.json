@@ -16,5 +16,5 @@
     "src/infrastructure/repositories/**/*.ts",
     "src/infrastructure/generated/**/*.d.ts"
   ],
-  "exclude": ["node_modules", "dist", "coverage", "benchmark", "src/infrastructure/build/**/*"]
+  "exclude": ["node_modules", "dist", "coverage", "src/infrastructure/build/**/*"]
 }

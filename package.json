@@ -33,8 +33,8 @@
     "gen:matcher:check": "bun scripts/check-generated-matcher.ts",
     "format": "bunx oxfmt . --write --ignore-path .gitignore --ignore-path .oxfmtignore --no-error-on-unmatched-pattern",
     "format:check": "bunx oxfmt . --check --ignore-path .gitignore --ignore-path .oxfmtignore --no-error-on-unmatched-pattern",
-    "lint": "bunx oxlint . --deny correctness --deny suspicious --deny perf --deny-warnings --ignore-pattern \"dist/**\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"coverage/**\" --ignore-pattern \"src/infrastructure/generated/matcher.js\"",
-    "lint:fix": "bunx oxlint . --deny correctness --deny suspicious --deny perf --fix --ignore-pattern \"dist/**\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"coverage/**\" --ignore-pattern \"src/infrastructure/generated/matcher.js\"",
+    "lint": "bunx oxlint . --deny correctness --deny suspicious --deny perf --deny-warnings --ignore-pattern \"dist/**\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"coverage/**\" --ignore-pattern \"src/infrastructure/generated/matcher.js\" --ignore-pattern \"src/infrastructure/generated/word-list.js\"",
+    "lint:fix": "bunx oxlint . --deny correctness --deny suspicious --deny perf --fix --ignore-pattern \"dist/**\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"coverage/**\" --ignore-pattern \"src/infrastructure/generated/matcher.js\" --ignore-pattern \"src/infrastructure/generated/word-list.js\"",
     "typecheck": "bunx tsc -p tsconfig.json --noEmit",
     "test": "bun run gen:matcher && bun test",
     "build": "bun run clean && bun run gen:matcher && bunx tsc -p tsconfig.build.json && bun scripts/copy-generated-matcher.ts",
@@ -43,9 +43,6 @@
     "pack:dry-run": "npm pack --dry-run",
     "release:dry-run": "npm publish --dry-run --provenance --access public",
     "release": "npm publish --provenance --access public",
-    "bench": "bun run gen:matcher && bun run benchmark/run.ts",
-    "benchmark:update-readme": "bun run benchmark/update-readme.ts",
-    "bench:readme": "bun run bench && bun run benchmark:update-readme",
     "check": "bun run format:check && bun run lint && bun run typecheck && bun run test && bun run gen:matcher:check && bun run build"
   },
   "devDependencies": {

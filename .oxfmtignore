@@ -1,6 +1,5 @@
 dist
 coverage
 node_modules
-benchmark/latest.json
-benchmark/latest.md
 src/infrastructure/generated/matcher.js
+src/infrastructure/generated/word-list.js

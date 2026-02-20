@@ -17,6 +17,6 @@
     "esModuleInterop": true,
     "noEmit": true
   },
-  "include": ["src/**/*.ts", "benchmark/**/*.ts", "scripts/**/*.ts", "test/**/*.ts"],
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "test/**/*.ts"],
   "exclude": ["node_modules", "dist", "coverage"]
 }
