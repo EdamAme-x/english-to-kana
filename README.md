@@ -1,5 +1,4 @@
-# english-to-kana
-
+# English to Kana
 英単語をカタカナ読みに変換する Bun ファーストな JavaScript/TypeScript ライブラリです。  
 辞書検索はビルド時に生成される分岐ベース matcher（radix tree 圧縮）で実行します。
 
@@ -7,6 +6,8 @@
 
 ```bash
 npm install english-to-kana
+pnpm install english-to-kana
+bun install english-to-kana
 ```
 
 ## Usage
@@ -24,7 +25,7 @@ console.log(hasKana("unknown")); // false
 - DDD 構成 (`domain` / `application` / `infrastructure`)
 - TDD 前提のユニットテスト
 - ビルド時 radix tree 生成による高速辞書検索
-- Bun + oxc (`oxlint` / `oxfmt`) ベースの品質ゲート
+- Bun + oxc (`oxlint` / `oxfmt`) ランタイムとフォーマッター/リンタ―
 - Git hooks (`lefthook`) / CI / publish workflow
 - 定期 benchmark 実行 + README 自動更新
 
@@ -76,25 +77,3 @@ bun run release
 ```
 
 `release` は npm provenance 付きで publish します。
-
-## Benchmark
-
-<!-- BENCHMARK:START -->
-
-### Latest Benchmark
-
-- Generated at: `2026-02-20T16:12:13.736Z`
-- Entries: `49,216`
-- Query set: `258`
-- Runtime: `bun 1.3.9 (win32/x64)`
-
-| Implementation          | Lookups/s | Total lookups | Time (ms) |
-| ----------------------- | --------: | ------------: | --------: |
-| Linear scan O(N)        |    14,328 |        17,286 |   1,206.5 |
-| Generated radix matcher |       412 |           516 |   1,253.8 |
-
-Speedup vs linear scan: **0.03x**
-
-_Benchmark measures dictionary lookup only._
-
-<!-- BENCHMARK:END -->
