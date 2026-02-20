@@ -22,7 +22,7 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Validate generated matcher
-        run: bun run gen:matcher:check
+        run: bun run gen:matcher && bun run gen:matcher:check
 
       - name: Run full checks
         run: bun run check

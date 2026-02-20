@@ -47,8 +47,26 @@ async function main(): Promise<void> {
 
   const generated = generateLookupModule(entries, sourceLabel);
   const generatedWordList = generateWordListModule(entries, sourceLabel);
-  const current = await readFile(outputPath, "utf8");
-  const currentWordList = await readFile(wordListOutputPath, "utf8");
+  const [current, currentWordList] = await Promise.all([
+    readFile(outputPath, "utf8").catch((error: unknown) => {
+      const fsError = error as NodeJS.ErrnoException;
+      if (fsError.code === "ENOENT") {
+        throw new Error(
+          `Generated matcher is missing. Run: bun run gen:matcher\nTarget: ${outputPath}`,
+        );
+      }
+      throw error;
+    }),
+    readFile(wordListOutputPath, "utf8").catch((error: unknown) => {
+      const fsError = error as NodeJS.ErrnoException;
+      if (fsError.code === "ENOENT") {
+        throw new Error(
+          `Generated word list is missing. Run: bun run gen:matcher\nTarget: ${wordListOutputPath}`,
+        );
+      }
+      throw error;
+    }),
+  ]);
   if (current !== generated.code) {
     throw new Error(
       `Generated matcher is outdated. Run: bun run gen:matcher\nTarget: ${outputPath}`,
