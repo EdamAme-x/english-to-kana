@@ -1,0 +1,64 @@
+{
+  "name": "english-to-kana",
+  "version": "0.1.0",
+  "description": "A Bun-first JavaScript/TypeScript library for converting English words into Katakana.",
+  "license": "MIT",
+  "author": "yun40",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "prepare": "bunx lefthook install",
+    "clean": "bun --eval \"import { rmSync } from 'node:fs'; rmSync('dist', { recursive: true, force: true });\"",
+    "data:convert": "bun scripts/convert-py-dict-to-json.ts",
+    "gen:matcher": "bun scripts/generate-radix-matcher.ts",
+    "gen:matcher:check": "bun scripts/check-generated-matcher.ts",
+    "format": "bunx oxfmt . --write --ignore-path .gitignore --ignore-path .oxfmtignore --no-error-on-unmatched-pattern",
+    "format:check": "bunx oxfmt . --check --ignore-path .gitignore --ignore-path .oxfmtignore --no-error-on-unmatched-pattern",
+    "lint": "bunx oxlint . --deny correctness --deny suspicious --deny perf --deny-warnings --ignore-pattern \"dist/**\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"coverage/**\" --ignore-pattern \"src/infrastructure/generated/matcher.js\"",
+    "lint:fix": "bunx oxlint . --deny correctness --deny suspicious --deny perf --fix --ignore-pattern \"dist/**\" --ignore-pattern \"node_modules/**\" --ignore-pattern \"coverage/**\" --ignore-pattern \"src/infrastructure/generated/matcher.js\"",
+    "typecheck": "bunx tsc -p tsconfig.json --noEmit",
+    "test": "bun run gen:matcher && bun test",
+    "build": "bun run clean && bun run gen:matcher && bunx tsc -p tsconfig.build.json && bun scripts/copy-generated-matcher.ts",
+    "postbuild": "bunx publint",
+    "prepack": "bun run check",
+    "pack:dry-run": "npm pack --dry-run",
+    "release:dry-run": "npm publish --dry-run --provenance --access public",
+    "release": "npm publish --provenance --access public",
+    "bench": "bun run gen:matcher && bun run benchmark/run.ts",
+    "benchmark:update-readme": "bun run benchmark/update-readme.ts",
+    "bench:readme": "bun run bench && bun run benchmark:update-readme",
+    "check": "bun run format:check && bun run lint && bun run typecheck && bun run test && bun run gen:matcher:check && bun run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "bun-types": "^1.2.14",
+    "lefthook": "^1.11.13",
+    "oxfmt": "^0.34.0",
+    "oxlint": "^1.49.0",
+    "publint": "^0.3.15",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "bun": ">=1.2.0"
+  },
+  "packageManager": "bun@1.2.22"
+}

@@ -1,0 +1,12 @@
+pre-commit:
+  parallel: true
+  commands:
+    format:
+      run: bun run format:check
+    lint:
+      run: bun run lint
+
+pre-push:
+  commands:
+    verify:
+      run: bun run check && bun run build

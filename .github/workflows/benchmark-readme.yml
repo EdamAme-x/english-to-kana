@@ -1,0 +1,44 @@
+name: Benchmark README Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 2 * * 1"
+
+permissions:
+  contents: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.22
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run benchmark
+        run: bun run bench
+
+      - name: Update README benchmark section
+        run: bun run benchmark:update-readme
+
+      - name: Commit benchmark updates
+        run: |
+          if git diff --quiet -- README.md benchmark/latest.json; then
+            echo "No benchmark changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md benchmark/latest.json
+          git commit -m "chore: update benchmark results"
+          git push

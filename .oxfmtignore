@@ -1,0 +1,6 @@
+dist
+coverage
+node_modules
+benchmark/latest.json
+benchmark/latest.md
+src/infrastructure/generated/matcher.js
